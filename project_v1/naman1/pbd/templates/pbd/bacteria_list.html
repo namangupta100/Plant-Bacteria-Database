@@ -1,0 +1,71 @@
+{% extends 'pbd/base.html' %}
+
+{% block title %}Bacteria List{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="page-title">
+            <i class="fas fa-bacteria me-2"></i>Plant Probiotic Bacteria Collection
+        </h2>
+    </div>
+    
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <form class="d-flex" action="{% url 'bacteria_list' %}" method="GET">
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="Search bacteria..." 
+                       name="q" aria-label="Search" value="{{ request.GET.q|default:'' }}">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for bacteria in bacteria_list %}
+    <div class="col-md-6">
+        <div class="card bacteria-card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-microscope me-2"></i>
+                    {{ bacteria.genus }} {{ bacteria.species }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <p class="mb-2">
+                        <i class="fas fa-flask info-icon"></i>
+                        <span class="detail-label">Strain:</span> 
+                        {{ bacteria.strain }}
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-seedling info-icon"></i>
+                        <span class="detail-label">Plant Host:</span> 
+                        {{ bacteria.plant_host }}
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-star info-icon"></i>
+                        <span class="detail-label">Function:</span> 
+                        {{ bacteria.function }}
+                    </p>
+                </div>
+                <a href="{% url 'bacteria_detail' bacteria.id %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-info-circle me-1"></i>View Details
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>No bacteria records found.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

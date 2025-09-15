@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fas fa-seedling me-2"></i>PBD
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                       href="{% url 'home' %}">
+                        <i class="fas fa-home me-1"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'bacteria_list' %}active{% endif %}" 
+                       href="{% url 'bacteria_list' %}">
+                        <i class="fas fa-bacteria me-1"></i>Database
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'bacteria_create' %}active{% endif %}" 
+                       href="{% url 'bacteria_create' %}">
+                        <i class="fas fa-plus-circle me-1"></i>Add New
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'schema-docs' %}">
+                        <i class="fas fa-book me-1"></i>API Docs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" 
+                       href="{% url 'about' %}">
+                        <i class="fas fa-info-circle me-1"></i>About
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex" action="{% url 'bacteria_list' %}" method="GET">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search bacteria..." 
+                           name="q" aria-label="Search" value="{{ request.GET.q|default:'' }}">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Plant Probiotic Bacteria{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --light-green: #4CAF50;
+            --very-light-green: #E8F5E9;
+            --leaf-green: #81C784;
+        }
+        
+        body {
+            background-color: #F9FBE7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green)) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar-brand i {
+            color: #A5D6A7;
+        }
+
+        .bacteria-card {
+            background-color: white;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .bacteria-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: var(--light-green);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        .detail-label {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--light-green);
+            border-color: var(--light-green);
+        }
+
+        .form-control:focus {
+            border-color: var(--leaf-green);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .page-title {
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--leaf-green);
+        }
+
+        .info-icon {
+            color: var(--leaf-green);
+            margin-right: 8px;
+        }
+
+        .footer {
+            background-color: var(--very-light-green);
+            padding: 1rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--leaf-green);
+        }
+        /* Loading indicator */
+        #loading-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--leaf-green);
+            transform: translateX(-100%);
+            transition: transform 0.2s ease-in-out;
+            z-index: 9999;
+        }
+
+        #loading-indicator.loading {
+            transform: translateX(0);
+            animation: loading 1s infinite ease-in-out;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Page transitions */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .toast {
+            background: white;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .toast-success {
+            border-color: var(--primary-green);
+        }
+
+        .toast-error {
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Indicator -->
+    <div id="loading-indicator"></div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'bacteria_list' %}">
+                <i class="fas fa-leaf me-2"></i> Plant Probiotic Bacteria
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="text-muted mb-0">
+                <i class="fas fa-seedling me-2"></i>
+                Advancing Plant Health Through Microbial Research
+            </p>
+            <p class="text-muted mb-0"><small>Developed By Naman Gupta</small></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
