@@ -55,12 +55,12 @@ The Plant Probiotic Bacteria Database (PBD) is a web application designed to hel
 
 5.  **Apply database migrations:**
     ```bash
-    python naman1/manage.py migrate
+    python build/manage.py migrate
     ```
 
 6.  **Create a superuser (optional, for admin access):**
     ```bash
-    python naman1/manage.py createsuperuser
+    python build/manage.py createsuperuser
     ```
 
 ## Usage
@@ -77,7 +77,7 @@ The Plant Probiotic Bacteria Database (PBD) is a web application designed to hel
         ```
 2.  **Start the server:**
     ```bash
-    python naman1/manage.py runserver
+    python build/manage.py runserver
     ```
     The application will be accessible at `http://127.0.0.1:8000/`.
 
@@ -94,4 +94,5 @@ We welcome contributions to the Plant Probiotic Bacteria Database! If you have s
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
 ## Contact
-For any questions or inquiries, please contact Naman Gupta at namangupta232004@gmail.com
+For any questions or inquiries, please contact Naman Gupta at [your-email@example.com].
+*(Note: Replace `your-email@example.com` with your actual email address)*
