@@ -29,9 +29,24 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-super-secret-django-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+# Parse ALLOWED_HOSTS from environment variable
+allowed_hosts_str = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost')
+ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',') if host.strip()]
+
+# Add wildcard for Render if not in DEBUG mode
 if not DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['https://' + host for host in ALLOWED_HOSTS if host]
+    if '.onrender.com' in allowed_hosts_str:
+        # Replace .onrender.com with wildcard pattern
+        ALLOWED_HOSTS = [h for h in ALLOWED_HOSTS if h != '.onrender.com']
+        ALLOWED_HOSTS.append('.onrender.com')
+    # Set CSRF_TRUSTED_ORIGINS
+    CSRF_TRUSTED_ORIGINS = [
+        'https://' + host for host in ALLOWED_HOSTS 
+        if host and not host.startswith('.')
+    ]
+    # Add wildcard for Render subdomains
+    if '.onrender.com' in allowed_hosts_str:
+        CSRF_TRUSTED_ORIGINS.append('https://*.onrender.com')
 
 
 # Application definition
