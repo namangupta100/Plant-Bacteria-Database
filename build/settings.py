@@ -33,20 +33,23 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 allowed_hosts_str = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',') if host.strip()]
 
-# Add wildcard for Render if not in DEBUG mode
+# In production, always allow all Render.com subdomains
 if not DEBUG:
-    if '.onrender.com' in allowed_hosts_str:
-        # Replace .onrender.com with wildcard pattern
-        ALLOWED_HOSTS = [h for h in ALLOWED_HOSTS if h != '.onrender.com']
+    # Add wildcard for all onrender.com subdomains
+    if not any('.onrender.com' in h for h in ALLOWED_HOSTS):
         ALLOWED_HOSTS.append('.onrender.com')
+    
     # Set CSRF_TRUSTED_ORIGINS
     CSRF_TRUSTED_ORIGINS = [
         'https://' + host for host in ALLOWED_HOSTS 
         if host and not host.startswith('.')
     ]
     # Add wildcard for Render subdomains
-    if '.onrender.com' in allowed_hosts_str:
-        CSRF_TRUSTED_ORIGINS.append('https://*.onrender.com')
+    CSRF_TRUSTED_ORIGINS.append('https://*.onrender.com')
+else:
+    # In DEBUG mode, be permissive
+    if '*' not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append('*')
 
 
 # Application definition

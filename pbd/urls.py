@@ -1,6 +1,5 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 from .views import (
     PlantProbioticBacteriaViewSet,
@@ -25,10 +24,19 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
     path('api/schema/', schema_view, name='schema'),
-    path('api/docs/', include_docs_urls(title='Plant Probiotic Bacteria API'), name='schema-docs'),
     path('bacteria/', BacteriaListView.as_view(), name='bacteria_list'),
     path('bacteria/<int:pk>/', BacteriaDetailView.as_view(), name='bacteria_detail'),
     path('bacteria/create/', BacteriaCreateView.as_view(), name='bacteria_create'),
     path('bacteria/<int:pk>/update/', BacteriaUpdateView.as_view(), name='bacteria_update'),
     path('bacteria/<int:pk>/delete/', BacteriaDeleteView.as_view(), name='bacteria_delete'),
 ]
+
+# Only include API docs if coreapi is available
+try:
+    from rest_framework.documentation import include_docs_urls
+    urlpatterns.append(
+        path('api/docs/', include_docs_urls(title='Plant Probiotic Bacteria API'), name='schema-docs')
+    )
+except (ImportError, AssertionError):
+    # coreapi not installed or not available
+    pass
